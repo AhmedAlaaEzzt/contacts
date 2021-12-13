@@ -1,4 +1,5 @@
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, removeContact }) => {
+
   return (
     <ol className="contact-list">
       {contacts.map(({ id, name, avatarURL, handle }) => (
@@ -11,7 +12,9 @@ const ContactList = ({ contacts }) => {
             <p>{name}</p>
             <p>@{handle}</p>
           </div>
-          <button className="contact-remove">
+          <button
+            className="contact-remove"
+            onClick={() => removeContact(id)}>
             Remove
           </button>
         </li>

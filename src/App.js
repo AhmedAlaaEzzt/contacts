@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ContactList from './components/contact-list/contact-list.component';
-import contacts from './data/contacts.data';
+import contactsData from './data/contacts.data';
 
 function App() {
+  const [contacts , setContacts] = useState(contactsData)
+
+  const removeContact = (id)=>{
+    setContacts(contacts.filter(contact => contact.id !== id))
+  }
   return (
-   <ContactList contacts={contacts} />
+   <ContactList removeContact={removeContact} contacts={contacts} />
   );
 }
 
