@@ -1,9 +1,20 @@
-const ContactList = () => {
-  const people = [{ name: "Tyler" }, { name: "Karen" }, { name: "Richard" }];
+const ContactList = ({ contacts }) => {
   return (
-    <ol>
-      {people.map((person) => (
-        <li key={person.name}>{person.name}</li>
+    <ol className="contact-list">
+      {contacts.map(({ id, name, avatarURL, handle }) => (
+        <li key={id} className="contact-list-item">
+          <div
+            className="contact-avatar"
+            style={{ backgroundImage: `url(${avatarURL})` }}
+          ></div>
+          <div className="contact-details">
+            <p>{name}</p>
+            <p>@{handle}</p>
+          </div>
+          <button className="contact-remove">
+            Remove
+          </button>
+        </li>
       ))}
     </ol>
   );
