@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-const ContactList = ({ contacts, removeContact }) => {
+const ContactList = ({ contacts, removeContact,onNavigate }) => {
   const [query, setQuery] = useState("");
 
   const showingContacts = query ===''
   ? contacts
   : contacts.filter(contact => contact.name.toLowerCase().includes(query.toLowerCase()) )
 
+  const clearQuery =()=>{
+    setQuery('')
+  }
   return (
     <div className="list-contacts">
       <div className="list-contacts-top">
@@ -16,22 +19,34 @@ const ContactList = ({ contacts, removeContact }) => {
           type="text"
           placeholder="Search Contacts"
           value={query}
-          onChange={(event)=> setQuery(event.target.value.trim())} />
+          onChange={(event)=> setQuery(event.target.value.trim())} 
+        />
+        <a 
+          href="#create"
+          onClick={onNavigate}
+          className="add-contact">
+            Add Contact
+        </a>
       </div>
+      {showingContacts.length !== contacts.length && (
+        <div className="showing-contacts">
+          <span>Now showing {showingContacts.length} of {contacts.length}</span>
+          <button onClick={clearQuery}>Show all</button>
+        </div>)}
       <ol className="contact-list">
-        {showingContacts.map(({ id, name, avatarURL, handle }) => (
-          <li key={id} className="contact-list-item">
+        {showingContacts.map((contact) => (
+          <li key={contact.id} className="contact-list-item">
             <div
               className="contact-avatar"
-              style={{ backgroundImage: `url(${avatarURL})` }}
+              style={{ backgroundImage: `url(${contact.avatarURL})` }}
             ></div>
             <div className="contact-details">
-              <p>{name}</p>
-              <p>@{handle}</p>
+              <p>{contact.name}</p>
+              <p>@{contact.handle}</p>
             </div>
             <button
               className="contact-remove"
-              onClick={() => removeContact(id)}
+              onClick={() => removeContact(contact)}
             >
               Remove
             </button>
