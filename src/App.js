@@ -8,7 +8,6 @@ import { Route } from "react-router-dom";
 function App(props) {
   console.log(props);
   const [contacts, setContacts] = useState([]);
-  const [screen, setScreen] = useState("list");
 
   useEffect(() => {
     ContactsAPI.getAll().then((contacts) => setContacts(contacts));
@@ -21,22 +20,14 @@ function App(props) {
 
   return (
     <div>
-      <Route
-        exact
-        path="/"
-        render={() => (
-          <ContactList
-            removeContact={removeContact}
-            contacts={contacts}
-            onNavigate={() => {
-              setScreen("create");
-            }}
-          />
-        )}
-      />
+      <Route exact path="/">
+        <ContactList
+          removeContact={removeContact}
+          contacts={contacts}
+        />
+      </Route>
 
-      <Route path='/create' component={CreateContact} />
-
+      <Route path="/create" component={CreateContact} />
     </div>
   );
 }
