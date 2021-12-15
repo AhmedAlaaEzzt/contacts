@@ -3,8 +3,10 @@ import ContactList from "./components/contact-list/contact-list.component";
 // import contactsData from "./data/contacts.data"; //fake data
 import * as ContactsAPI from "./utils/ContactsAPI";
 import CreateContact from "./components/create-contact/create-contact.component";
+import { Route } from "react-router-dom";
 
-function App() {
+function App(props) {
+  console.log(props);
   const [contacts, setContacts] = useState([]);
   const [screen, setScreen] = useState("list");
 
@@ -19,16 +21,22 @@ function App() {
 
   return (
     <div>
-      {screen === "list" && (
-        <ContactList 
-          removeContact={removeContact} 
-          contacts={contacts} 
-          onNavigate={() => {
-            setScreen("create")
-          }}
+      <Route
+        exact
+        path="/"
+        render={() => (
+          <ContactList
+            removeContact={removeContact}
+            contacts={contacts}
+            onNavigate={() => {
+              setScreen("create");
+            }}
           />
-      )}
-      {screen === "create" && <CreateContact />}
+        )}
+      />
+
+      <Route path='/create' component={CreateContact} />
+
     </div>
   );
 }
